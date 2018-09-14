@@ -1,12 +1,8 @@
 const logger = require('./logger')
 
-class Controller {
+class DBProvider {
 	constructor(db) {
 		this.db = db 
-	}
-	
-	getDB() {
-		return this.db
 	}
 
 	all(callback)  {
@@ -25,8 +21,8 @@ class Controller {
 		SELECT DISTINCT currency as currency FROM exchange 	
 		`, function(err, res) {
 			if (err) { logger.error(err); 
-			} else {
-				callback(res);
+			} else {				
+				callback(res.map(x => x.currency));
 			} 
 		})
 	}
@@ -37,7 +33,7 @@ class Controller {
 		`, function(err, res) {
 			if (err) { logger.error(err); 
 			} else {
-				callback(res);
+				callback(res.map(x => x.date));
 			} 
 		})
 	}
@@ -66,4 +62,4 @@ class Controller {
 }
 
 
-module.exports = Controller
+module.exports = DBProvider

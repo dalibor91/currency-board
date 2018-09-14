@@ -7,7 +7,7 @@ const api = require('./app/api')
 const portnum = process.argv[2] ? 
     parseInt(process.argv[2]) : 3000;
 const rootDir = process.cwd()
-const publicDir = 'public'
+const publicDir = 'frontend/dist'
 const dataDir = 'data'
 
 storage.init(`${rootDir}/${dataDir}`)
