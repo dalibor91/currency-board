@@ -20,9 +20,33 @@ class Api {
 	}
 	
 	fetchAndInsert() {
+		const self = this;
 		this.fetch((_xml) => {
 			_xml.onParse((_xmlResult) => {
-				console.log(_xmlResult)
+				for (var date in _xmlResult) {
+					((date, rows) => {
+						self.getDb().get(`SELECT count(*) as cnt FROM exchange WHERE date = ?`, [date], (err, row) => {
+							
+							if (err) { 
+								logger.error(err); 
+							}
+							else {
+								if (row.cnt == 0) {
+									logger.info(`Insert for ${date} , ${rows.length} records`)
+									rows.forEach((val) => {
+										self.getDb().run(`
+											INSERT INTO exchange (date, value, currency) VALUES (? , ?, ?)  
+										`, [ date, val.rate, val.currency ], (err) => {
+											if (err) { 
+												logger.error(err) 
+											}
+										});
+									})
+								}
+							}
+						})
+					})(date, _xmlResult[date])
+				}
 			})
 		})
 	} 

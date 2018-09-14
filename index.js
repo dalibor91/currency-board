@@ -14,13 +14,12 @@ storage.init(`${rootDir}/${dataDir}`)
 
 logger.info(`Running on port ${portnum}`)
 
-api.doimport(storage.db());
+control.db = storage.db()
+api.doimport(control.db);
 
 express()
 .use('/', control.public(rootDir, publicDir))
-.use('/api', control.api(rootDir))
+.use('/api', control.api(rootDir, control.db))
 .listen(portnum, ()=> {
     logger.info(`Server is running...`)
-    
-    
 })

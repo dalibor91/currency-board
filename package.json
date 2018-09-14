@@ -4,12 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "/bin/bash sh/start.sh", 
+    "status": "/bin/bash sh/status.sh", 
+    "stop": "/bin/bash sh/stop.sh"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.2",
     "express": "^4.16.3",
     "sqlite": "^3.0.0",
     "xml2js": "^0.4.19"

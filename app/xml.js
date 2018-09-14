@@ -1,32 +1,4 @@
-
 const xml2js = require('xml2js')
-/*
-class XMLResult {
-	constructor(cube) {
-		this.cube = cube
-	}
-	
-	getCube() {
-		return new XMLResult(this.cube['Cube'])
-	}
-	
-	hasCube() {
-		if (this.getResult())
-			return true
-		return false
-	}
-	
-	getResult() {
-		return this.cube['Cube']
-	}
-	
-	getAttr(name) {
-		return this.cube['$'][name]
-	}
-	
-	hasAttr()
-}
-*/
 
 class XML {
 	constructor(data) {
