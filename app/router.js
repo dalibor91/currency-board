@@ -13,6 +13,13 @@ module.exports = {
 		let router  = express.Router()
 		let provider= new DBProv(db)
 		
+		//add for debug
+		router.get('*', (req, res, next) => {
+			logger.info("GET *")
+			res.setHeader('Access-Control-Allow-Origin', '*');
+			next()
+		})
+		
 		router.get('/', (req, res, next) => {
 			logger.info("GET /api")
 			provider.all((r) => { res.send(r) })
