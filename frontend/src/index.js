@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import ReactTable from "react-table";
 
 import DataProvider from "./utils/dataprovider.js"
+import CurChart from "./chart.js"
+
 
 import "react-table/react-table.css";
 import "./style/custom.css"
@@ -14,27 +16,56 @@ class App extends React.Component {
     }
     
     componentDidMount() {
-        let dp = new DataProvider("http://localhost:3000/api")
+        let dp = new DataProvider()
+        
         let self = this;
         dp.get("", (r) => {
             self.setState({
-                rows: r.data
+                allData: r.data
             })
         })
     }
     
+    
     componentWillUnount() {}
     
     render() {
-        let _rows = this.state && this.state.rows ? this.state.rows : []
-        const _columns = [
-          { Header: "Date", accessor: "date" },
-          { Header: "Currency", accessor: "currency" },
-          { Header: 'Value in EUR', accessor: "value"}
-        ];
+        let _mainData = this.state && this.state.allData ? this.state.allData : []
+        
         return (
             <div id="table-container">
-                <ReactTable data={_rows} columns={_columns} className="-striped" />
+                <div className="table-col">
+                    <ReactTable 
+                        filterable
+                        data={_mainData} 
+                        resolveData={data => data.map(row => row)} 
+                        columns={[
+                          { Header: "Date", accessor: "date" },
+                          { Header: "Currency", accessor: "currency" },
+                          { Header: 'Value in EUR', accessor: "value"}
+                        ]} 
+                        className="-striped" 
+                        showPageSizeOptions={false}
+                    />
+                </div>
+                <div className="table-col">
+                    <ReactTable 
+                    filterable
+                        data={_mainData} 
+                        pivotBy={["currency"]}
+                        columns={[
+                          { accessor: "currency" },
+                          { Header: "Date" , accessor: "date" },
+                          { Header: "Currency", accessor: "currency" },
+                          { Header: 'Value in EUR', accessor: "value"}
+                        ]} 
+                        className="-striped" 
+                        showPageSizeOptions={false}
+                    />
+                </div>
+                <div className="table-col chart">
+                    <CurChart />
+                </div>
             </div>
         );
     }

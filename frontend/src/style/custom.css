@@ -1,6 +1,8 @@
 body {
 	background: #ffffff;
 	margin: 0px;
+	font-family: sans-serif;
+	font-size: 12px;
 }
 
 .container {
@@ -15,4 +17,17 @@ body {
 
 #table-container .-pagination {
 	height: 35px;
+}
+
+.table-col {
+	max-width: 32%;
+	display: inline-block;
+	float:left;
+	margin-right: 1%;
+}
+
+.table-col.chart {
+	max-width: none;
+	width: 50%;
+	min-height: 300px;
 }

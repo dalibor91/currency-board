@@ -16,6 +16,7 @@ module.exports = {
 		//add for debug
 		router.get('*', (req, res, next) => {
 			logger.info("GET *")
+			logger.info(req.query)
 			res.setHeader('Access-Control-Allow-Origin', '*');
 			next()
 		})
@@ -25,7 +26,10 @@ module.exports = {
 			provider.all((r) => { res.send(r) })
 		}).get('/currency', (req, res, next) => {
 			logger.info("GET /api/currency")
-			provider.currencies((r) => { res.send(r) })
+			req.query.arr != undefined ?
+				provider.currenciesArr((r) => { res.send(r) }, req.query.filter) :
+				provider.currencies((r) => { res.send(r) })
+			
 		}).get('/currency/:currency', (req, res, next) => {
 			logger.info(`GET /api/currency/${req.params.currency}`)
 			provider.currency(req.params.currency, (r) => { res.send(r) })

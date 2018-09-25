@@ -4,7 +4,7 @@ import axios from "axios";
 export default class DataProvider {
 	
 	constructor(url) {
-		this.url = url
+		this.url = url || "http://localhost:3000/api"
 	}
 	
 	get(path, callback) {
